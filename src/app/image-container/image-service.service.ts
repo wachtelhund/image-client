@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { ImageModel } from './image-model';
+import { Payload } from './payload-model';
 
-const jwt: string = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoYW1wdXMxMjMxMjMxYSIsImdpdmVuX25hbWUiOiJIYW1wdXMiLCJmYW1pbHlfbmFtZSI6Ik5pbHNzb24iLCJlbWFpbCI6ImhhbXB1YTJzc2Rzc0BnbWFpbC5jb21hIiwieF9wZXJtaXNzaW9uX2xldmVsIjo4LCJ4X3VzZXJfaWQiOiI2NDE2NGJiODZlNGRkMTkzZDc2ODE0ODkiLCJpYXQiOjE2NzkyMzE3NTUsImV4cCI6MTY3OTIzNTM1NX0.Y9WvHNgPZRnkeHnYYVXa2wUsKhJ_UOHg4MwUyk10uweqZJx8XDrF-JEYngV4PmIHyCBSqPcOxRrXU0SGiKp1ElwtcJzgCER3eHryV99RTU2S-clk3Kq6YgfAsLFM5AkET8IcZBZmpaJZjcp2dUZ-xUW5dbHQ3bolNoE0WqPtbSrrC3uoRcpihGJlbp09NCxzgFq7YdMPEsmz0mK3UbHxaA0_XN_QONAfFkiYbL3q8Pb8hLyJu5V_YrRdWBYfbZ-19mqQ28Mpdf6OT3e5VzFyj1ELpyFhM0g5cxY9iJhJ1vDqBEenqMhrhlgL9JWSuT1nWNoRuzyNVkRKDfUpu0VDFw'
+const jwt: string = localStorage.getItem('token') || '';
 const httpOptions = {
   withCredentials: true,
   headers: new HttpHeaders({
@@ -52,8 +53,26 @@ export class ImageServiceService {
     );
   }
 
-  getImage(id: number): Observable<any> {
-    return this.http.get(`${this.imageApiUrl}/${id}`, httpOptions).pipe(
+  postImage(image: any): Observable<any> {
+    // const arr = image.image.split(',');
+    const payload: Payload = {
+      data: image.image,
+      contentType: image.contentType
+    }
+    if (image.description && image.description.trim() !== '') {
+      payload['description'] = image.description;
+    }
+
+    if (image.location && image.location.trim() !== '') {
+      payload['location'] = image.location;
+    }
+    console.log(image);
+    console.log('payload', payload);
+
+
+    // description: image.description,
+    // location: image.location,
+    return this.http.post(this.imageApiUrl, payload, httpOptions).pipe(
       retry(1),
       catchError(this.handleError)
     );

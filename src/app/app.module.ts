@@ -9,22 +9,33 @@ import { ImageComponent } from './image-container/image/image.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ImageServiceService } from './image-container/image-service.service';
 import { HeaderComponent } from './header/header.component';
+import { RouterModule } from '@angular/router';
+import { PostImageFormComponent } from './post-image-form/post-image-form.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
+const routes = [
+  { path: 'images', component: ImageContainerComponent },
+  { path: 'images/post', component: PostImageFormComponent },
+];
 @NgModule({
   declarations: [
     AppComponent,
     ImageContainerComponent,
     ImageComponent,
     HeaderComponent,
+    PostImageFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [ImageServiceService],
+  providers: [ImageServiceService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Image Upload Form</h1>
+  <form [formGroup]="imageUploadForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="image">Image (required):</label>
+      <label class="file-upload-button">
+        <input type="file" id="image" formControlName="image" (change)="onFileChange($event)" required>
+        Browse Images
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="contentType">Content Type (required):</label>
+      <select id="contentType" formControlName="contentType" required>
+        <option value="" disabled>Select content type</option>
+        <option value="image/png">png</option>
+        <option value="image/jpeg">jpeg</option>
+        <option value="image/gif">gif</option>
+
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Description (optional):</label>
+      <textarea id="description" formControlName="description" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="location">Location (optional):</label>
+      <input type="text" id="location" formControlName="location">
+    </div>
+    <button type="submit" [disabled]="!imageUploadForm.valid">Upload Image</button>
+  </form>
+</div>

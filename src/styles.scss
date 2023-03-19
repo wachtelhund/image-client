@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import './variables.scss';
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: $background-color;
   background-image: radial-gradient($accent-color 1.1px, $background-color 1.1px);

@@ -31,7 +31,6 @@ export class ImageComponent {
       description: [this.imageData.description, Validators.required],
       location: [this.imageData.location, Validators.required]
     })
-    console.log(this.imageData);
   }
 
   onShowDetails(event: MouseEvent) {
