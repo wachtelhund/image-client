@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { ImageModel } from './image-model';
 import { Payload } from './payload-model';
+import { environment } from '../../environment/environment';
 
 const jwt: string = localStorage.getItem('token') || '';
 const httpOptions = {
@@ -17,7 +17,7 @@ const httpOptions = {
 
 @Injectable()
 export class ImageServiceService {
-  imageApiUrl: string = 'http://localhost:8080/api/v1/images/';
+  imageApiUrl: string = environment.API_RESOURCE;
   constructor(private http: HttpClient) { }
 
   handleError(error: any) {
