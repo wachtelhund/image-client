@@ -32,7 +32,6 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm.value).subscribe((res: any) => {
-        console.log(res);
         this.router.navigate(['/']);
         setTimeout(() => {
           window.location.reload();
@@ -53,7 +52,7 @@ export class LoginComponent {
         }, 0)
       }, (err: any) => {
         this.registerForm.reset();
-        alert('Invalid credentials');
+        alert('Username or email already exists');
       })
     }
   }
