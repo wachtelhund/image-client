@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class HeaderComponent {
     { path: '/images', label: 'Images' },
     { path: '/images/post', label: 'Post Image' },
   ]
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
     if (this.isAuthendicated) {
       this.publicLinks = [...this.protectedLinks];
     }
@@ -25,6 +26,9 @@ export class HeaderComponent {
 
   onLogout() {
     this.auth.logout();
-    location.reload();
+    this.router.navigate(['/']);
+    setTimeout(() => {
+      window.location.reload();
+    }, 0);
   }
 }
