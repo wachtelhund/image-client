@@ -46,14 +46,13 @@ export class LoginComponent {
 
   onRegister() {
     if (this.registerForm.valid) {
-      this.auth.register(this.registerForm.value).subscribe((res: any) => {
-        this.auth.login(this.registerForm.value).subscribe((res: any) => {
-          console.log(res);
-          this.router.navigate(['/']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 0)
-        });
+      this.auth.register(this.registerForm.value).subscribe((res: any) => { });
+      this.auth.login(this.registerForm.value).subscribe((res: any) => {
+        console.log(res);
+        this.router.navigate(['/']);
+        setTimeout(() => {
+          window.location.reload();
+        }, 0)
         // console.log(res);
         // this.router.navigate(['/']);
         // setTimeout(() => {
