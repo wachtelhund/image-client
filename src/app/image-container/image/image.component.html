@@ -1,9 +1,9 @@
 <div [ngClass]="{'active': isActive}" *ngIf="imageData" data-id={{imageData.id}} class="image">
-  <img [src]="'https://crossorigin.me/' + imageData.imageURL" alt="Angular Logo" />
+  <img [src]="imageData.imageURL" alt="Angular Logo" />
   <div class="btn-group">
     <button [ngClass]="{'btn-active': detailsActive}" (click)="onShowDetails($event)" id="details-btn">Details</button>
     <button [ngClass]="{'btn-active': editActive}" (click)="onEdit($event)" id="edit-btn">Edit</button>
-    <button id="delete-btn">Delete</button>
+    <button (click)="onDelete()" id="delete-btn">Delete</button>
   </div>
   <figcaption *ngIf="detailsActive && (imageData.description || imageData.location)">
     <div class="details">
@@ -11,12 +11,12 @@
       <p>{{imageData.location}}</p>
     </div>
   </figcaption>
-  <div class="input-form" *ngIf="editActive">
+  <form [formGroup]="detailsForm" (ngSubmit)="onSubmit($event)" class="input-form" *ngIf="editActive">
     <label for="description">Description</label>
-    <textarea [(ngModel)]="imageData.description" id="description" name="description" id="" cols="28"
+    <textarea formControlName="description" id="description" name="description" id="" cols="28"
       rows="5">{{imageData.description}}</textarea>
-    <!-- <input [(ngModel)]="imageData.description" id="description" type="text"> -->
     <label for="location">Location</label>
-    <input [(ngModel)]="imageData.location" id="location" type="text">
-  </div>
+    <input name="location" formControlName="location" id="location" type="text">
+    <button id="save-btn">Save!</button>
+  </form>
 </div>

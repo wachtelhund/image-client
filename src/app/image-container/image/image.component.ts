@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-image',
@@ -7,11 +8,29 @@ import { Component, Input } from '@angular/core';
 })
 export class ImageComponent {
   @Input() imageData: any;
+  @Output() submitEvent = new EventEmitter<Object>();
   detailsActive: boolean = false;
   isActive: boolean = false;
   editActive: boolean = false;
+  detailsForm: FormGroup = new FormGroup({});
+
+  constructor(private formBuilder: FormBuilder) { }
+
+  onSubmit(event: SubmitEvent) {
+    const { description, location } = this.detailsForm.value;
+    const payload = {
+      description,
+      location,
+      id: this.imageData.id
+    }
+    this.submitEvent.emit({ ...this.detailsForm.value, id: this.imageData.id })
+  }
 
   ngOnInit() {
+    this.detailsForm = this.formBuilder.group({
+      description: [this.imageData.description, Validators.required],
+      location: [this.imageData.location, Validators.required]
+    })
     console.log(this.imageData);
   }
 
@@ -30,5 +49,9 @@ export class ImageComponent {
       this.detailsActive = false;
     }
     this.editActive && this.detailsActive ? this.detailsActive = false : this.detailsActive = this.detailsActive;
+  }
+
+  onDelete() {
+    this.submitEvent.emit({ id: this.imageData.id, delete: true })
   }
 }
