@@ -47,11 +47,18 @@ export class LoginComponent {
   onRegister() {
     if (this.registerForm.valid) {
       this.auth.register(this.registerForm.value).subscribe((res: any) => {
-        console.log(res);
-        this.router.navigate(['/login']);
-        setTimeout(() => {
-          window.location.reload();
-        }, 0)
+        this.auth.login(this.registerForm.value).subscribe((res: any) => {
+          console.log(res);
+          this.router.navigate(['/']);
+          setTimeout(() => {
+            window.location.reload();
+          }, 0)
+        });
+        // console.log(res);
+        // this.router.navigate(['/']);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 0)
       }, (err: any) => {
         this.registerForm.reset();
         alert('Invalid credentials');
